@@ -7,7 +7,9 @@ import org.fkjava.weixin.service.JsonRedisSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -24,10 +26,42 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 // 实现ApplicationContextAware接口的目的：为了让当前对象能够得到Spring容器本身，能够通过Spring的容器来找到里面的Bean
 @SpringBootApplication
-public class EventProcessorApplication implements ApplicationContextAware {
+public class EventProcessorApplication //
+		implements ApplicationContextAware
+		// 为了让非WEB应用能够一直等待信息的到来，必须实现CommandLineRunner接口
+		, CommandLineRunner//
+		, DisposableBean {
 
 	private static final Logger LOG = LoggerFactory.getLogger(EventProcessorApplication.class);
 	private ApplicationContext ctx;
+	// 运行器的监视器，将会在这个监视器上等待停止的通知
+	private final Object runnerMonitor = new Object();
+
+	// 此程序中，run方法必须实现，否则无法收到消息！
+	@Override
+	public void run(String... args) throws Exception {
+		// 实现CommandLineRunner接口，在Spring Boot项目启动之初执行的
+		// 等待退出通知
+		Thread t = new Thread(() -> {
+			synchronized (runnerMonitor) {
+				try {
+					runnerMonitor.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		t.start();
+	}
+
+	@Override
+	public void destroy() throws Exception {
+		// 实现DisposableBean接口，在Spring容器销毁的时候执行的
+		// 发送退出通知
+		synchronized (runnerMonitor) {
+			runnerMonitor.notify();
+		}
+	}
 
 	// 这个方法，会在当前实例创建之后，由Spring自己调用，而Spring会把它本身传入进来
 	@Override

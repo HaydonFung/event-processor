@@ -1,11 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.fkjava</groupId>
-  <artifactId>event-processor</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <description>能够接收所有的事件进行处理，其中用户的关注，就是一个事件。</description>
-  
-  	<!-- 继承一个项目的配置 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.fkjava</groupId>
+	<artifactId>event-processor</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>能够接收所有的事件进行处理，其中用户的关注，就是一个事件。</description>
+
+	<!-- 继承一个项目的配置 -->
 	<!-- 这里继承了Spring Boot的配置，可以方便后面的版本号管理，各个组件的版本Spring Boot都已经统一管理 -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -25,20 +27,20 @@
 
 	<dependencies>
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>javax.xml.bind</groupId> -->
-<!-- 			<artifactId>jaxb-api</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.sun.xml.bind</groupId> -->
-<!-- 			<artifactId>jaxb-core</artifactId> -->
-<!-- 			<version>2.3.0.1</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.sun.xml.bind</groupId> -->
-<!-- 			<artifactId>jaxb-impl</artifactId> -->
-<!-- 			<version>2.3.2</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>javax.xml.bind</groupId> -->
+		<!-- <artifactId>jaxb-api</artifactId> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.sun.xml.bind</groupId> -->
+		<!-- <artifactId>jaxb-core</artifactId> -->
+		<!-- <version>2.3.0.1</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.sun.xml.bind</groupId> -->
+		<!-- <artifactId>jaxb-impl</artifactId> -->
+		<!-- <version>2.3.2</version> -->
+		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -56,10 +58,10 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 		<!-- Spring MVC的自动配置 -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-web</artifactId> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.boot</groupId> -->
+		<!-- <artifactId>spring-boot-starter-web</artifactId> -->
+		<!-- </dependency> -->
 		<!-- 开发者工具，用于实现热部署（修改文件以后马上生效） -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -94,6 +96,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+					<fork>true</fork>
+					<!-- JMX的端口不能重复 -->
+					<jmxPort>9002</jmxPort>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
