@@ -12,5 +12,4 @@ public class SubscribeEventMessageProcessor implements EventMessageProcessor {
 	public void onMessage(EventInMessage event) {
 		System.out.println("处理关注消息： " + event);
 	}
-
 }
