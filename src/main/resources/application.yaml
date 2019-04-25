@@ -4,7 +4,7 @@ spring:
       # jdbc:mysql://127.0.0.1:3306/kemao_3 表示找到本机的MySQL服务器中名为kemao_3的数据库
       # useSSL=false 表示不使用SSL加密
       # serverTimezone=CST 指定服务器的时区，CST（China Standard Time）
-      url: jdbc:mysql://127.0.0.1:3306/kemao_3_fz?useSSL=false&serverTimeZone=CST&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://127.0.0.1:3306/kemao_3_fz?useSSL=false&serverTimezone=CST&allowPublicKeyRetrieval=true
       username: kemao_3_fz
       password: 1234
 
