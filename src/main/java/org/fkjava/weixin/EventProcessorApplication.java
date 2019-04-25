@@ -47,7 +47,7 @@ public class EventProcessorApplication //
 				try {
 					runnerMonitor.wait();
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					LOG.error("运行时监视器出现问题：" + e.getLocalizedMessage(), e);
 				}
 			}
 		});
@@ -106,7 +106,7 @@ public class EventProcessorApplication //
 		c.setConnectionFactory(connectionFactory);
 
 		// 订阅event消息，当队列中有event消息我们就可以收到
-		ChannelTopic topic = new ChannelTopic("fengzhe_event");
+		ChannelTopic topic = new ChannelTopic("kemao_3_event");
 
 		// 使用匿名内部类实现一个监听器
 //		MessageListener listener = new MessageListener() {
@@ -128,6 +128,8 @@ public class EventProcessorApplication //
 
 			// 强制转换，然后根据消息的事件类型，执行不同的业务
 			EventInMessage event = (EventInMessage) msg;
+
+			LOG.trace("事件处理程序收到的消息：{}", msg);
 			String eventType = event.getEvent();// 获取事件类型
 			eventType = eventType.toLowerCase();// 转换为小写
 
